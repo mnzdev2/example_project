@@ -1,3 +1,4 @@
 class AppConstants {
-  static const appName = 'EXAMPLE PROJECT';
+  static const String title = 'title';
+  static const String chooseTheme = 'chooseTheme';
 }

@@ -1,11 +1,11 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:example_project/config/themes/app_themes.dart';
+import 'package:example_project/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
-
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,20 +14,44 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int dropdownValue = 0;
 
+  final FlutterLocalization _localization = FlutterLocalization.instance;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     dropdownValue = DynamicTheme.of(context)!.themeId;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(AppConstants.title.getString(context)),
       ),
       body: Center(
           child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 24, bottom: 12),
-            child: Text('Select your theme here:'),
+          Text('Current language is: ${_localization.getLanguageName()}'),
+          const SizedBox(height: 64.0),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('English'),
+                  onPressed: () {
+                    _localization.translate('en');
+                  },
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: ElevatedButton(
+                  child: const Text('Bahasa'),
+                  onPressed: () {
+                    _localization.translate('id', save: false);
+                  },
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            child: Text(AppConstants.chooseTheme.getString(context)),
           ),
           DropdownButton(
               icon: const Icon(Icons.arrow_downward),

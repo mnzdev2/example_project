@@ -1,11 +1,36 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
+import 'package:example_project/config/translations/app_locale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 import 'app_themes.dart';
 
-class ThemeWrapper extends StatelessWidget {
+class ThemeWrapper extends StatefulWidget {
   final Widget child;
   const ThemeWrapper({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<ThemeWrapper> createState() => _ThemeWrapperState();
+}
+
+class _ThemeWrapperState extends State<ThemeWrapper> {
+  final FlutterLocalization _localization = FlutterLocalization.instance;
+  @override
+  void initState() {
+    _localization.init(
+      mapLocales: [
+        const MapLocale('en', AppLocale.EN),
+        const MapLocale('id', AppLocale.ID),
+      ],
+      initLanguageCode: 'en',
+    );
+    _localization.onTranslatedLanguage = _onTranslatedLanguage;
+    super.initState();
+  }
+
+  void _onTranslatedLanguage(Locale? locale) {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +58,12 @@ class ThemeWrapper extends StatelessWidget {
         defaultThemeId: AppThemes.lightBlue,
         builder: (context, theme) {
           return MaterialApp(
-            title: 'dynamic_themes example',
+            supportedLocales: _localization.supportedLocales,
+            localizationsDelegates: _localization.localizationsDelegates,
+            title: 'Example project',
             theme: theme,
-            home: child,
+            home: widget.child,
+            debugShowCheckedModeBanner: false,
           );
         });
   }
