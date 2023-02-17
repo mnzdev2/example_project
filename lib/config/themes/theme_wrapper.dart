@@ -1,13 +1,14 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
+import 'package:example_project/config/routes/route_generator.dart';
 import 'package:example_project/config/translations/app_locale.dart';
+import 'package:example_project/constants/route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
 import 'app_themes.dart';
 
 class ThemeWrapper extends StatefulWidget {
-  final Widget child;
-  const ThemeWrapper({Key? key, required this.child}) : super(key: key);
+  const ThemeWrapper({Key? key}) : super(key: key);
 
   @override
   State<ThemeWrapper> createState() => _ThemeWrapperState();
@@ -62,8 +63,9 @@ class _ThemeWrapperState extends State<ThemeWrapper> {
             localizationsDelegates: _localization.localizationsDelegates,
             title: 'Example project',
             theme: theme,
-            home: widget.child,
             debugShowCheckedModeBanner: false,
+            onGenerateRoute: RouteGenerator.generateRoute,
+            initialRoute: RouteConstants.initialScreen,
           );
         });
   }

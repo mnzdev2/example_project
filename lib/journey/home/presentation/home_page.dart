@@ -1,6 +1,7 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:example_project/config/themes/app_themes.dart';
 import 'package:example_project/constants/app_constants.dart';
+import 'package:example_project/constants/route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
@@ -26,6 +27,11 @@ class _HomePageState extends State<HomePage> {
       body: Center(
           child: Column(
         children: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteConstants.settingScreen);
+              },
+              child: const Text('settings')),
           Text('Current language is: ${_localization.getLanguageName()}'),
           const SizedBox(height: 64.0),
           Row(
